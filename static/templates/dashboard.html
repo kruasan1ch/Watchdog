@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-title">
+            <span class="card-title">Add page</span>
+        </div>
+        <div class="card-content">
+            <input type="text" id="link"><br>
+            <select id="type" class="browser-default">
+                {% for type in page_types %}
+                <option value="{{type.value}}">{{type.name}}</option>
+                {% endfor %}
+            </select><br>
+            <button id="add_page" class="btn waves-effect waves-light" onclick="SendPageData()">Add page</button>
+            <button id="check4u" class="btn waves-effect waves-light" onclick="CheckForUpdates()">Check for updates</button><br>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h3>Recently updated</h3>
+    <table class="page_table centered" id="recent">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Link</th>
+                <th>Last chapter</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u_page in updated %}
+                <tr>
+                    <td>{{u_page.id}}</td>
+                    <td><a href="{{u_page.link}}" >{{u_page.name}}</a></td>
+                    <td>{{u_page.last_chapter}}</td>
+                    <td><button class="btn-floating btn-small waves-effect waves-light red"
+                                onclick="DeletePage({{u_page.id}})"><i class="material-icons centered">close</i></button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>All</h3>
+    <table class="page_table centered" id="all">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Link</th>
+                <th>Last chapter</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+                <tr>
+                    <td>{{page.id}}</td>
+                    <td><a href="{{page.link}}" >{{page.name}}</a></td>
+                    <td>{{page.last_chapter}}</td>
+                    <td><button class="btn-floating btn-small waves-effect waves-light red"
+                                onclick="DeletePage({{page.id}})"><i class="material-icons centered">close</i></button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
