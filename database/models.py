@@ -7,9 +7,9 @@ class Page(Base):
     __tablename__ = "pages"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    link = Column(String, unique=True, index=True)
+    name = Column(String(64))
+    link = Column(String(64), unique=True, index=True)
     type = Column(Integer, nullable=True)
-    last_chapter = Column(String, nullable=True)
+    last_chapter = Column(String(64), nullable=True)
     last_check = Column(Date, nullable=True)
     last_update = Column(DateTime, nullable=True)

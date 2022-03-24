@@ -1,11 +1,15 @@
 from parser.parsable import Parsable
 from bs4 import BeautifulSoup
+from core.enums import *
 import requests
 
 
-def get_results(chapters):
+def get_results(chapters, site):
     result = []
-    for index in range(1, len(chapters)):
+    startIndex = 0
+    if site is PageTypes.Mangakakalot:
+        startIndex = 1
+    for index in range(startIndex, len(chapters)):
         result.append(list(filter(None, chapters[index].text.split('\n'))))
     return result
 
@@ -22,7 +26,7 @@ class Mangakakalot(Parsable):
 
     def parse(self):
         chapters = self.get_soup().findAll('div', class_='row')
-        return get_results(chapters)
+        return get_results(chapters, PageTypes.Mangakakalot)
 
     def get_name(self):
         return self.get_soup().find('ul', class_='manga-info-text').find('h1').text
@@ -40,7 +44,7 @@ class Readmanganato(Parsable):
 
     def parse(self):
         chapters = self.get_soup().findAll('li', class_='a-h')
-        return get_results(chapters)
+        return get_results(chapters, PageTypes.Readmanganato)
 
     def get_name(self):
         return self.get_soup().find('div', class_='story-info-right').find('h1').text
